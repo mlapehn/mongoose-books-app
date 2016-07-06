@@ -12,7 +12,17 @@ We're going to take this app piece by piece over the next day or so and build it
 
 At first it's going to be a list of **books**.  Later we'll add in **authors** and embed **character** data in each book.
 
+<<<<<<< HEAD
 
 [Sprint 1 - mongoose](docs/sprint1.md)
 
 [Sprint 2 - relationships & reference](docs/sprint2.md)
+=======
+[Sprint 1 - Mongoose](docs/sprint1.md)
+
+Let's create an **author** model that gets referenced in the **book** model!
+
+[Sprint 2 - Reference & Populate](docs/sprint2.md)
+
+<!-- [Sprint 3 - Embedded](docs/sprint3.md) -->
+>>>>>>> d11549b3b171e5175cc5b02d686327185474928d

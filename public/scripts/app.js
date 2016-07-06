@@ -20,21 +20,35 @@ $(document).ready(function(){
 
   $('#newBookForm').on('submit', function(e) {
     e.preventDefault();
+    console.log('new book serialized', $(this).serializeArray());
     $.ajax({
       method: 'POST',
       url: '/api/books',
-      data: $(this).serialize(),
+      data: $(this).serializeArray(),
       success: newBookSuccess,
       error: newBookError
     });
   });
 
   $booksList.on('click', '.deleteBtn', function() {
+    console.log('clicked delete button to', '/api/books/'+$(this).attr('data-id'));
     $.ajax({
       method: 'DELETE',
       url: '/api/books/'+$(this).attr('data-id'),
       success: deleteBookSuccess,
       error: deleteBookError
+    });
+  });
+
+  $booksList.on('submit', '#addCharacterForm', function(e) {
+    e.preventDefault();
+    console.log('new characters');
+    $.ajax({
+      method: 'POST',
+      url: '/api/books/'+$(this).attr('data-id')+'/characters',
+      data: $(this).serializeArray(),
+      success: newCharacterSuccess,
+      error: newCharacterError
     });
   });
 
@@ -51,7 +65,7 @@ function render () {
 
   // append html to the view
   $booksList.append(booksHtml);
-};
+}
 
 function handleSuccess(json) {
   allBooks = json;
@@ -70,13 +84,14 @@ function newBookSuccess(json) {
 }
 
 function newBookError() {
-
+  console.log('newbook error!');
 }
 
 function deleteBookSuccess(json) {
   var book = json;
+  console.log(json);
   var bookId = book._id;
-
+  console.log('delete book', bookId);
   // find the book with the correct ID and remove it from our allBooks array
   for(var index = 0; index < allBooks.length; index++) {
     if(allBooks[index]._id === bookId) {
@@ -88,5 +103,22 @@ function deleteBookSuccess(json) {
 }
 
 function deleteBookError() {
+  console.log('deletebook error!');
+}
 
+function newCharacterSuccess(json) {
+  var book = json;
+  var bookId = book._id;
+  // find the book with the correct ID and update it
+  for(var index = 0; index < allBooks.length; index++) {
+    if(allBooks[index]._id === bookId) {
+      allBooks[index] = book;
+      break;  // we found our book - no reason to keep searching (this is why we didn't use forEach)
+    }
+  }
+  render();
+}
+
+function newCharacterError() {
+  console.log('adding new character error!');
 }

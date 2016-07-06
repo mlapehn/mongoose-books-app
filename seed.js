@@ -126,4 +126,8 @@ db.Author.remove({}, function(err, authors) {
     });
 
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> d11549b3b171e5175cc5b02d686327185474928d
